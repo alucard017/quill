@@ -18,8 +18,8 @@ const blogRouter = new Hono<ENV>();
 
 blogRouter.use("/*", userMiddleware);
 
-blogRouter.post("/", postBlog);
-blogRouter.put("/", updateBlog);
+blogRouter.post("/post", postBlog);
+blogRouter.put("/update", updateBlog);
 blogRouter.get("/bulk", getBlogs);
 blogRouter.get("/:id", getBlog);
 

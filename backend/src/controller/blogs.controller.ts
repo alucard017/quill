@@ -1,3 +1,4 @@
+import { postBlogInput, updateBlogInput } from "@alucard777/common";
 import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
 import { Context } from "hono";
@@ -8,6 +9,11 @@ export const postBlog = async (c: Context) => {
   }).$extends(withAccelerate());
 
   const body = await c.req.json();
+  const { success } = postBlogInput.safeParse(body);
+  if (!success) {
+    c.status(411);
+    return c.json({ message: "Wrong Inputs provided" });
+  }
   const userId = c.get("userId");
   try {
     const blogid = await prisma.post.create({
@@ -21,7 +27,7 @@ export const postBlog = async (c: Context) => {
       id: blogid,
     });
   } catch (e: any) {
-    e.status(403);
+    c.status(403);
     return c.text("Error in posting blog");
   }
 };
@@ -32,6 +38,11 @@ export const updateBlog = async (c: Context) => {
   }).$extends(withAccelerate());
 
   const body = await c.req.json();
+  const { success } = updateBlogInput.safeParse(body);
+  if (!success) {
+    c.status(411);
+    return c.json({ message: "Wrong Inputs provided" });
+  }
   try {
     const blogid = await prisma.post.update({
       where: {
@@ -43,7 +54,7 @@ export const updateBlog = async (c: Context) => {
       id: blogid,
     });
   } catch (e: any) {
-    e.status(411);
+    c.status(411);
     return c.text("Error while updating the blog");
   }
 };
@@ -64,7 +75,7 @@ export const getBlog = async (c: Context) => {
       blog,
     });
   } catch (e: any) {
-    e.status(411);
+    c.status(411);
     return c.text("Error while fetching the blog");
   }
 };
