@@ -1,16 +1,15 @@
-import { MoreVertical, ChevronLast, ChevronFirst } from "lucide-react"
-import { useContext, createContext, useState } from "react"
+import { MoreVertical, ChevronLast, ChevronFirst } from "lucide-react";
+import { useContext, createContext, useState } from "react";
 
 const SidebarContext = createContext<{ expanded: boolean }>({
-    expanded: true, // Default value, assuming the sidebar is expanded by default
-  });
-  
+  expanded: true, // Default value, assuming the sidebar is expanded by default
+});
 
-
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
 export default function Quill({ children }) {
-  const [expanded, setExpanded] = useState(true)
-  
+  const [expanded, setExpanded] = useState(true);
+
   return (
     <aside className="h-screen">
       <nav className="flex flex-col h-full bg-white border-r shadow-sm">
@@ -55,13 +54,14 @@ export default function Quill({ children }) {
         </div>
       </nav>
     </aside>
-  )
+  );
 }
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
-export function SidebarItem({ icon, text, active, alert}) {
-  const { expanded } = useContext(SidebarContext)
-  
+export function SidebarItem({ icon, text, active, alert }) {
+  const { expanded } = useContext(SidebarContext);
+
   return (
     <li
       className={`
@@ -104,5 +104,5 @@ export function SidebarItem({ icon, text, active, alert}) {
         </div>
       )}
     </li>
-  )
+  );
 }
